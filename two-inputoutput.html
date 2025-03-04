@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Math with Images</title>
+    <style>
+        /* Style for the input fields and container */
+        #inputContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        input {
+            width: 50px;
+            height: 30px;
+            text-align: center;
+            margin: 5px;
+        }
+
+        /* Center the button container */
+        #buttonContainer {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* Style for the result display */
+        #result {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Style for the images */
+        .result-image {
+            width: 50px; /* Set a fixed size for the image */
+            height: 50px;
+            margin: 5px;
+        }
+
+        #imageContainer {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<p style="text-align: center;"> Simple math calculation from 1 - 10.</p>
+    <!-- Input fields and operator -->
+    <div id="inputContainer">
+        <input type="number" id="number1" min="1" max="10" placeholder="1-10">
+        <input type="text" id="operator" maxlength="1" placeholder="+ or -">
+        <input type="number" id="number2" min="1" max="10" placeholder="1-10">
+    </div>
+
+    <!-- Button container to center it -->
+    <div id="buttonContainer">
+        <button onclick="calculateResult()">Calculate</button>
+    </div>
+
+    <!-- Display the result -->
+    <div id="result"></div>
+
+    <!-- Container for images -->
+    <div id="imageContainer"></div>
+
+    <script>
+        function calculateResult() {
+            // Get input values
+            const num1 = parseInt(document.getElementById("number1").value);
+            const num2 = parseInt(document.getElementById("number2").value);
+            const operator = document.getElementById("operator").value.trim();
+
+            // Validate inputs
+            if (isNaN(num1) || isNaN(num2) || (operator !== "+" && operator !== "-")) {
+                document.getElementById("result").textContent = "Please enter valid inputs.";
+                return;
+            }
+
+            let result;
+
+            // Perform the calculation based on the operator
+            if (operator === "+") {
+                result = num1 + num2;
+            } else if (operator === "-") {
+                result = num1 - num2;
+            }
+
+            // Display the result
+            document.getElementById("result").textContent = `${num1} ${operator} ${num2} = ${result}`;
+
+            // Display images corresponding to the result
+            displayImages(result);
+        }
+
+        function displayImages(count) {
+            const imageContainer = document.getElementById("imageContainer");
+
+            // Clear any previous images
+            imageContainer.innerHTML = "";
+
+            let imageUrl;
+
+            // If the result is 0, display exactly one image
+            if (count === 0) {
+                imageUrl = "https://dmrqkbkq8el9i.cloudfront.net/Pictures/web/k/b/x/headless-sourpatch-kids.gif";  // Image for 0 (replace with your own image URL)
+                const imgElement = document.createElement("img");
+                imgElement.src = imageUrl;
+                imgElement.alt = "Result Image";
+                imgElement.classList.add("result-image"); // Add styling class for the image
+                imageContainer.appendChild(imgElement);
+            }
+            // If the result is less than 0, display a negative result image
+            else if (count < 0) {
+                imageUrl = "https://images.freeimages.com/images/premium/previews/4905/49053224-cartoon-ghost-rising-from-grave.jpg";  // Image for negative results (replace with your own image URL)
+            }
+            // If the result is positive, display the usual images
+            else {
+                imageUrl = "https://ih1.redbubble.net/image.1187790693.7267/st,small,507x507-pad,600x600,f8f8f8.jpg";  // Image for positive results (replace with your own image URL)
+            }
+
+            // Loop to create the required number of images for positive and negative results
+            for (let i = 0; i < Math.abs(count); i++) {
+                const imgElement = document.createElement("img");
+                imgElement.src = imageUrl;
+                imgElement.alt = "Result Image";
+                imgElement.classList.add("result-image"); // Add styling class for the image
+                imageContainer.appendChild(imgElement);
+            }
+        }
+    </script>
+
+</body>
+</html>

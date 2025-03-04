@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1 INPUT 1 OUTPUT TEMPLATE</title>
+    <style>
+
+        /* STYLE FOR THE INPUT FIELD */
+        #charInput {
+
+        }
+
+        /* STYLE FOR THE SUBMIT BUTTON */
+        #submitButton {
+
+        }
+
+        /* STYLE FOR THE IMAGE */
+        #displayedImage {
+            display: none; /* This line is mandatory */
+        }
+    </style>
+</head>
+<body>
+
+    
+    <!-- INPUT FIELD FOR 1 CHARACTER -->
+    <input type="text" id="charInput" maxlength="1">
+
+    <!-- BUTTON TO DISPLAY IMAGE -->
+    <button onclick="displayImage()" id="submitButton">Show Image</button>
+
+    <!-- IMAGE TO DISPLAY -->
+    <img id="displayedImage" src="" alt="Displayed Image">
+
+
+    <!-- Image Display Script Below -->
+    <script>
+        // Array of images
+        // DIRECTIONS: UPDATE THE URLS WITH THE RELATIVE LINKS OF YOUR IMAGES
+        const images = [
+            "https://logosdown.com/wp-content/uploads/2023/09/apple-logo-0-2048x2048-1-768x768.png", //A
+            "https://th.bing.com/th/id/R.2cae52eb53cf853d03bcca36f37d83b2?rik=GXw16I5i8NcXuw&pid=ImgRaw&r=0", //B
+            "https://th.bing.com/th/id/R.d11f3c1398062d2c72d9434e43938c7a?rik=kBq%2b7WwFrJfTNw&riu=http%3a%2f%2fwww.petsfoto.com%2fwp-content%2fuploads%2f2010%2f08%2fCat82.jpg&ehk=ZP7PFTUSZWEOQzWD%2bdsm%2ft7VTeWKrNagBpJpVJu9DhU%3d&risl=&pid=ImgRaw&r=0", //C
+            "https://th.bing.com/th/id/OIP.ShBS_Ki7kdLhKyLDI9hp_QAAAA?rs=1&pid=ImgDetMain", //D
+            "https://th.bing.com/th/id/R.dc52e001a82b1f7f84b971e93d6793c9?rik=icjfA5yKeJHbXg&riu=http%3a%2f%2fwww.greekboston.com%2fwp-content%2fuploads%2f2015%2f10%2ffried-egg.jpg&ehk=5sBaKJPxd3p8dcn5AVIVNgWVMbXvhDKnLlvNISF3oNc%3d&risl=&pid=ImgRaw&r=0", //E
+            "hhttps://www.fishkeepingworld.com/wp-content/uploads/2019/10/Goldfish-A-Z-Best-Types-Of-Goldfish-Single-Tail-And-Fancy-Banner.jpg", //F
+            "https://th.bing.com/th/id/OIP.CB9DLgytiZoA1RKmLfjO_wHaE7?rs=1&pid=ImgDetMain", //G
+            "https://th.bing.com/th/id/OIP.iWpiJPjx_hgoQlFQq1RIDAHaE8?rs=1&pid=ImgDetMain", //H
+            "https://restaurantclicks.com/wp-content/uploads/2022/05/Most-Popular-Ice-Cream.jpg", //I
+            "https://th.bing.com/th/id/OIP.j9CZr4tBKNEF7sent1hz_QHaEK?rs=1&pid=ImgDetMain", //J
+            "https://www.easytourchina.com/images/Photo/chinese-kite/p270_d20190425120120.jpg", //K
+            "https://th.bing.com/th/id/R.540b84cdd7c8f1c448dbc47c534b36cf?rik=GiLZkHGybDPt9A&riu=http%3a%2f%2fupload.wikimedia.org%2fwikipedia%2fcommons%2fe%2fe7%2fWhite_Lion.jpg&ehk=jTlSaBYTdTecOrQNEeFU%2fQCQTvI4Gquxb3tYiIqVA4E%3d&risl=&pid=ImgRaw&r=0", //L
+            "https://th.bing.com/th/id/OIP.00w806hJ3XEzxPn-HrzFSwHaE8?rs=1&pid=ImgDetMain", //M
+            "https://wallpaperaccess.com/full/6075689.png", //N
+            "https://cdn.britannica.com/02/162702-050-61255496/Octopus.jpg", //O
+            "https://wallpapers.com/images/hd/pig-animals-on-a-farm-5efqoxzlj4hvxuqq.jpg", //P
+            "https://s3.amazonaws.com/libapps/accounts/47742/images/shutterstock_289.jpg", //Q
+            "https://static.vecteezy.com/system/resources/previews/008/134/818/original/check-mark-icon-checkmark-right-symbol-tick-sign-ok-button-correct-circle-icon-free-vector.jpg", //R
+            "https://m.media-amazon.com/images/I/91JQPQ1Q9SL.jpg", //S
+            "https://th.bing.com/th/id/OIP.8J7gOuRNOEa7cC2RxShQjQHaFj?rs=1&pid=ImgDetMain", //T
+            "https://th.bing.com/th/id/OIP.kb18cmNrb854zRnX-e97kAHaHa?rs=1&pid=ImgDetMain", //U
+            "https://th.bing.com/th/id/OIP.17r0rFVZ0cknykbsEx3GAAHaHa?rs=1&pid=ImgDetMain", //V
+            "https://www.hdwallpapers.in/download/closeup_view_of_ocean_big_waves_hd_ocean-HD.jpg", //W
+            "https://amplitude-laser.com/wp-content/uploads/2018/10/Imagerie-Rayon-X-HEADER.jpg", //X
+            "https://th.bing.com/th/id/OIP.dWOd4gPS2MgI-bNkx8KXHAHaEK?rs=1&pid=ImgDetMain", //Y
+            "https://www.thoughtco.com/thmb/IEwW5TB0zLNZj5ayPa38b8COobA=/2121x1414/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1043597638-e65039eee38e4e88a01c78f0369cd5c6.jpg"  //Z
+        ];
+
+        function displayImage() {
+            const input = document.getElementById("charInput").value.toUpperCase();
+            const imgElement = document.getElementById("displayedImage");
+            
+            // Assign an image based on character (A-Z)
+            const index = input.charCodeAt(0) - 65; // 'A' is 65 in ASCII
+            if (index >= 0 && index < images.length) {
+                imgElement.src = images[index];
+                imgElement.style.display = "block";
+            } else {
+                /* 
+                alert("Please enter a letter between A and Z.");
+                imgElement.style.display = "none";
+                */
+
+                // IF INVALID INPUT IS ENTERED, DISPLAY ALTERNATE IMAGE
+                imgElement.src = "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcmtkdnJhMXY4Njd1cXR3MTM3MW1nMzZ1NXNhNHlhOHA0MWF2dDUzdyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/13dRJkj5wgKq9q/giphy.gif"
+                imgElement.style.display = "block";
+            }
+        }
+    </script>
+
+</body>
+</html>
